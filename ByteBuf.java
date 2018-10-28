@@ -424,14 +424,31 @@ public class ByteBuf {
     }
 
     /**
-     * Writes the given String into this buffer at the current
-     * position, and then increments the position.
+     * Writes the given String into this buffer at the current position,
+     * and then increments the position.
      *
      * @param value The String to be written
      * @return This buffer
      */
     public ByteBuf putString(String value) {
         putArray(value.getBytes(StandardCharsets.UTF_8));
+        return this;
+    }
+
+    /**
+     * Writes the given String (or truncated string) into this buffer at the current position,
+     * and then increments the position.
+     *
+     * @param value     The String to be written
+     * @param maxLength Maximum string length in characters
+     * @return This buffer
+     */
+    public ByteBuf putString(String value, int maxLength) {
+        if (value.length() > maxLength) {
+            putString(value.substring(0, maxLength));
+        } else {
+            putString(value);
+        }
         return this;
     }
 
