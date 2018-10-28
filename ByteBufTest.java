@@ -206,6 +206,15 @@ class ByteBufTest {
     }
 
     @Test
+    void truncatedStringTest() {
+        ByteBuf buf = new ByteBuf();
+        String string = "Hello world!";
+        buf.putString(string, 5);
+        buf.setPosition(0);
+        assertEquals("Hello", buf.getString(5));
+    }
+
+    @Test
     void resizeByPutTest() {
         ByteBuf buf = new ByteBuf(4);
         buf.putInt(1);
